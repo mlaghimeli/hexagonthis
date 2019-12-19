@@ -8,8 +8,8 @@ import (
 
 func SetupConfigurableDependencies() {
 
-	var platesRepository core.PlatesAndDriversRepository = repository.InMemoryDBFactory(3)
-	//var platesRepository core.PlatesAndDriversRepository = repository.HttpRepositoryFactory()
+	//var platesRepository core.PlatesAndDriversRepository = repository.InMemoryDBFactory(3)
+	var platesRepository core.PlatesAndDriversRepository = repository.ExternalApplicationRepositoryFactory()
 	requestPlates := core.PlatesAndDriversServiceFactory(platesRepository)
 	restAdapter := rest.RestControllerFactory(requestPlates)
 	restAdapter.Bind()

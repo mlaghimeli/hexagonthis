@@ -8,10 +8,10 @@ import (
 	"net/http"
 )
 
-type HttpRepository struct {
+type ExternalApplicationRepository struct {
 }
 
-func (db *HttpRepository) GetAllPlates() []core.PlateAndDriver {
+func (db *ExternalApplicationRepository) GetAllPlates() []core.PlateAndDriver {
 	resp, _ := http.Get("http://localhost:3000")
 	defer resp.Body.Close()
 	var plateDriver []core.PlateAndDriver
@@ -19,7 +19,7 @@ func (db *HttpRepository) GetAllPlates() []core.PlateAndDriver {
 	return plateDriver
 }
 
-func (db *HttpRepository) SavePlate(pd core.PlateAndDriver) error {
+func (db *ExternalApplicationRepository) SavePlate(pd core.PlateAndDriver) error {
 	bytesRepresentation, _ := json.Marshal(pd)
 	r, err := http.Post("http://localhost:3000/save", "application/json", bytes.NewBuffer(bytesRepresentation))
 	if err != nil {
@@ -31,6 +31,6 @@ func (db *HttpRepository) SavePlate(pd core.PlateAndDriver) error {
 	return nil
 }
 
-func HttpRepositoryFactory() *HttpRepository {
-	return &HttpRepository{}
+func ExternalApplicationRepositoryFactory() *ExternalApplicationRepository {
+	return &ExternalApplicationRepository{}
 }
